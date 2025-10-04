@@ -29,6 +29,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useChatStore } from "@/lib/store/use-chat-store";
+import { cn } from "@/lib/utils";
 import { simulateAssistantResponse } from "@/lib/utils/assistant-simulator";
 
 const SUGGESTIONS = [
@@ -37,7 +38,11 @@ const SUGGESTIONS = [
   "Draft a friendly release note update",
 ];
 
-export function ChatComposer() {
+type ChatComposerProps = {
+  floating?: boolean;
+};
+
+export function ChatComposer({ floating = false }: ChatComposerProps) {
   const selectedConversationId = useChatStore(
     (state) => state.selectedConversationId
   );
@@ -104,13 +109,32 @@ export function ChatComposer() {
 
   return (
     <TooltipProvider delayDuration={120}>
-      <div className="relative border-t border-transparent px-4 pb-6 pt-4 transition-colors md:px-6">
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[320px] [background:radial-gradient(circle_at_30%_-10%,color-mix(in_srgb,var(--primary)_32%,transparent)_0%,transparent_55%),radial-gradient(circle_at_70%_0%,color-mix(in_srgb,var(--accent)_30%,transparent)_0%,transparent_60%)]" />
-        <div className="mx-auto w-full max-w-3xl space-y-4">
+      <div
+        className={cn(
+          "relative border-t border-transparent px-4 pb-6 pt-4 transition-all duration-500 md:px-6",
+          floating && "border-none pb-0 pt-0 md:px-0"
+        )}
+      >
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-x-0 top-0 -z-10 h-[320px] [background:radial-gradient(circle_at_30%_-10%,color-mix(in_srgb,var(--primary)_32%,transparent)_0%,transparent_55%),radial-gradient(circle_at_70%_0%,color-mix(in_srgb,var(--accent)_30%,transparent)_0%,transparent_60%)]",
+            floating && "h-full opacity-70"
+          )}
+        />
+        <div
+          className={cn(
+            "mx-auto w-full max-w-3xl space-y-4 transition-all duration-500",
+            floating && "max-w-2xl"
+          )}
+        >
           <SuggestionRow onSelect={handleSuggestion} />
           <form
             onSubmit={handleSubmit}
-            className="glass-form space-y-3 rounded-[1.75rem] p-4 md:p-6"
+            className={cn(
+              "glass-form space-y-3 rounded-[1.75rem] p-4 transition-all duration-500 md:p-6",
+              floating &&
+                "shadow-xl shadow-emerald-500/15 backdrop-blur-lg md:p-7"
+            )}
           >
             <Textarea
               ref={textareaRef}
@@ -143,7 +167,12 @@ export function ChatComposer() {
               </div>
             </div>
           </form>
-          <p className="text-center text-xs text-muted-foreground">
+          <p
+            className={cn(
+              "text-center text-xs text-muted-foreground transition-opacity duration-500",
+              floating && "text-xs/relaxed text-muted-foreground/80"
+            )}
+          >
             ChatGPT can make mistakes. Consider checking important information.
           </p>
         </div>

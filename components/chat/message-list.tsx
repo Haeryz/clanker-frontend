@@ -57,31 +57,19 @@ export function MessageList() {
     return items;
   }, [conversation]);
 
-  if (!conversation) {
+  if (!conversation || conversation.messages.length === 0) {
     return (
-      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6">
-        <div className="pointer-events-none absolute inset-0 -z-10 opacity-80 [background:radial-gradient(circle_at_20%_20%,color-mix(in_srgb,var(--accent)_35%,transparent)_0%,transparent_60%),radial-gradient(circle_at_80%_10%,color-mix(in_srgb,var(--primary)_28%,transparent)_0%,transparent_55%)]" />
-        <div className="glass-panel w-full max-w-xl rounded-[2rem] px-10 py-12 text-center">
-          <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
-            New conversation
-          </p>
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
-            Welcome to Clanker
-          </h1>
-          <p className="mt-3 max-w-md text-balance text-sm text-muted-foreground">
-            Ask anything to kick off a fresh chat, or browse the history in the sidebar to revisit past ideas.
-          </p>
-        </div>
+      <div className="relative h-full w-full overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-70 [background:radial-gradient(circle_at_18%_28%,color-mix(in_srgb,var(--primary)_24%,transparent)_0%,transparent_58%),radial-gradient(circle_at_80%_12%,color-mix(in_srgb,var(--accent)_24%,transparent)_0%,transparent_55%),linear-gradient(160deg,color-mix(in_srgb,var(--background)_96%,transparent)_0%,color-mix(in_srgb,var(--background)_82%,transparent)_100%)]" />
       </div>
     );
   }
 
   return (
-    <div className="relative flex-1 overflow-hidden">
+    <div className="relative flex-1 min-h-0 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-75 [background:radial-gradient(circle_at_15%_35%,color-mix(in_srgb,var(--primary)_30%,transparent)_0%,transparent_58%),radial-gradient(circle_at_85%_10%,color-mix(in_srgb,var(--accent)_28%,transparent)_0%,transparent_60%),linear-gradient(140deg,color-mix(in_srgb,var(--background)_92%,transparent)_0%,color-mix(in_srgb,var(--background)_75%,transparent)_100%)]" />
       <ScrollArea className="h-full">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 pb-28 pt-28 md:gap-8 md:px-6 md:pb-32 md:pt-32">
-          <ConversationIntro />
+  <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 pb-28 pt-28 md:gap-8 md:px-6 md:pb-32 md:pt-32">
           {timeline.map((entry, index) => {
             if (entry.type === "separator") {
               return <DayDivider key={`${entry.label}-${index}`} label={entry.label} />;
@@ -119,32 +107,9 @@ function formatDayLabel(date: Date) {
 function DayDivider({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-3 px-4 py-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground md:gap-4 md:px-6">
-  <Separator className="flex-1 bg-border" />
+      <Separator className="flex-1 bg-border" />
       <span>{label}</span>
-  <Separator className="flex-1 bg-border" />
-    </div>
-  );
-}
-
-function ConversationIntro() {
-  return (
-    <div className="glass-panel mx-4 mb-10 space-y-4 rounded-[2rem] p-6 text-foreground md:mx-6 md:mb-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
-          <p className="text-xs uppercase tracking-[0.3em] text-emerald-600/80 dark:text-emerald-300/70">
-            Conversation context
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground dark:text-white">
-            Working with your AI copilot
-          </h2>
-        </div>
-        <span className="inline-flex w-fit items-center justify-center rounded-full bg-emerald-500/15 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-200">
-          Live
-        </span>
-      </div>
-      <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
-        This conversation syncs across devices. Smart reminders, references and inline search keep everything at your fingertips while ChatGPT drafts, critiques, and iterates alongside you.
-      </p>
+      <Separator className="flex-1 bg-border" />
     </div>
   );
 }

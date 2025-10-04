@@ -3,6 +3,17 @@ const relativeTime = new Intl.RelativeTimeFormat("en", {
   style: "short",
 });
 
+const absoluteTime = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true,
+  timeZone: "UTC",
+  timeZoneName: "short",
+});
+
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -33,6 +44,10 @@ export function formatRelativeTime(date: Date, now = new Date()) {
     return relativeTime.format(Math.round(elapsed / MONTH), "month");
   }
   return relativeTime.format(Math.round(elapsed / YEAR), "year");
+}
+
+export function formatConversationAbsoluteTime(date: Date) {
+  return absoluteTime.format(date);
 }
 
 export function getConversationSectionLabel(date: Date, now = new Date()) {

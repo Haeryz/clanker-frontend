@@ -13,7 +13,6 @@ import { IconButton } from "@/components/common/icon-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useChatStore } from "@/lib/store/use-chat-store";
 import { formatRelativeTime } from "@/lib/utils/date";
@@ -63,15 +62,14 @@ export function ChatHeader() {
 
   return (
     <header className="glass-header sticky top-3 z-20 mx-3 flex h-20 items-center justify-between rounded-3xl px-4 transition-all md:mx-8 md:h-[5.25rem] md:px-8">
-      <div className="flex flex-1 items-center gap-3 md:gap-6">
-  <SidebarTrigger className="glass-chip h-11 w-11 rounded-2xl text-foreground/75 hover:border-primary/40 hover:text-primary" />
+  <div className="flex flex-1 items-center gap-3 md:gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <Badge
               variant="outline"
               className="glass-chip rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-700 dark:text-emerald-200"
             >
-              GPT-4.1
+              Qwen 3 4B thinking
             </Badge>
             <Badge
               variant="outline"

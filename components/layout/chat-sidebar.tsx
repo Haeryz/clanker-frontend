@@ -31,9 +31,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { formatRelativeTime, getConversationSectionLabel } from "@/lib/utils/date";
+import { useRelativeTime } from "@/hooks/use-relative-time";
+import { getConversationSectionLabel } from "@/lib/utils/date";
 import { useChatStore } from "@/lib/store/use-chat-store";
 import type { Conversation } from "@/lib/types/chat";
 
@@ -41,6 +43,11 @@ type ConversationSection = {
   label: string;
   conversations: Conversation[];
 };
+
+const sidebarFooterButtonClasses =
+  "group rounded-2xl h-auto min-h-[3.25rem] items-center justify-start gap-3 px-3 py-3 pr-4 [&>span:last-child]:max-w-full [&>span:last-child]:whitespace-normal [&>span:last-child]:break-words [&>span:last-child]:leading-tight";
+const sidebarFooterLabelClasses =
+  "flex-1 whitespace-normal break-words text-left leading-tight group-data-[collapsible=icon]:hidden";
 
 export function ChatSidebar() {
   const conversations = useChatStore((state) => state.conversations);
@@ -125,12 +132,15 @@ export function ChatSidebar() {
               Clanker
             </span>
           </div>
-          <Badge
-            variant="outline"
-            className="glass-chip border-transparent px-3 py-1 text-[10px] font-normal uppercase tracking-widest text-sidebar-foreground/65"
-          >
-            Beta
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge
+              variant="outline"
+              className="glass-chip border-transparent px-3 py-1 text-[10px] font-normal uppercase tracking-widest text-sidebar-foreground/65"
+            >
+              Beta
+            </Badge>
+            <SidebarTrigger className="glass-chip size-10 rounded-2xl text-sidebar-foreground/65 transition hover:border-primary/40 hover:text-primary" />
+          </div>
         </div>
         <Button
           size="lg"
@@ -223,33 +233,63 @@ export function ChatSidebar() {
       <SidebarFooter className="px-5 pb-6 pt-4">
         <SidebarMenu className="gap-1.5 text-sm">
           <SidebarMenuItem>
-            <SidebarMenuButton className="glass-inline rounded-xl text-sidebar-foreground/80 transition hover:border-primary/40 hover:text-primary">
-              <CompassIcon className="size-4" />
-              <span>Explore GPTs</span>
+            <SidebarMenuButton
+              size="lg"
+              className={cn(
+                "glass-inline text-sidebar-foreground/80 transition hover:border-primary/40 hover:text-primary",
+                sidebarFooterButtonClasses
+              )}
+            >
+              <CompassIcon className="size-4 shrink-0" />
+              <span className={sidebarFooterLabelClasses}>Explore GPTs</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
-              <Wand2Icon className="size-4" />
-              <span>Create custom GPT</span>
+            <SidebarMenuButton
+              size="lg"
+              className={cn(
+                "bg-transparent text-sidebar-foreground/70 transition hover:text-primary",
+                sidebarFooterButtonClasses
+              )}
+            >
+              <Wand2Icon className="size-4 shrink-0" />
+              <span className={sidebarFooterLabelClasses}>Create custom GPT</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
-              <HistoryIcon className="size-4" />
-              <span>Updates &amp; FAQ</span>
+            <SidebarMenuButton
+              size="lg"
+              className={cn(
+                "bg-transparent text-sidebar-foreground/70 transition hover:text-primary",
+                sidebarFooterButtonClasses
+              )}
+            >
+              <HistoryIcon className="size-4 shrink-0" />
+              <span className={sidebarFooterLabelClasses}>Updates &amp; FAQ</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
-              <KeyboardIcon className="size-4" />
-              <span>Keyboard shortcuts</span>
+            <SidebarMenuButton
+              size="lg"
+              className={cn(
+                "bg-transparent text-sidebar-foreground/70 transition hover:text-primary",
+                sidebarFooterButtonClasses
+              )}
+            >
+              <KeyboardIcon className="size-4 shrink-0" />
+              <span className={sidebarFooterLabelClasses}>Keyboard shortcuts</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
-              <SettingsIcon className="size-4" />
-              <span>Settings</span>
+            <SidebarMenuButton
+              size="lg"
+              className={cn(
+                "bg-transparent text-sidebar-foreground/70 transition hover:text-primary",
+                sidebarFooterButtonClasses
+              )}
+            >
+              <SettingsIcon className="size-4 shrink-0" />
+              <span className={sidebarFooterLabelClasses}>Settings</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -273,38 +313,47 @@ function ConversationButton({
   onTogglePin,
   showPin = false,
 }: ConversationButtonProps) {
-  const lastActivity = useMemo(
-    () => formatRelativeTime(new Date(conversation.lastActivityAt)),
-    [conversation.lastActivityAt]
+  const { relative: lastActivity, absolute: lastActivityAbsolute } = useRelativeTime(
+    conversation.lastActivityAt
   );
 
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
         className={cn(
-          "group glass-inline flex w-full flex-col items-start gap-1 rounded-2xl px-3 py-2.5 text-left text-sidebar-foreground/80 transition group-has-data-[sidebar=menu-action]/menu-item:pr-12",
-          "hover:border-primary/35 hover:text-primary",
-          isActive && "border-primary/45 text-primary"
+          "group glass-inline flex h-auto min-h-[4rem] w-full items-start gap-3 rounded-2xl px-3 py-3 text-left text-sidebar-foreground/85 transition group-has-data-[sidebar=menu-action]/menu-item:pr-14",
+          "hover:border-primary/30 hover:text-primary",
+          isActive && "border-primary/50 text-primary"
         )}
         onClick={() => onSelect(conversation.id)}
       >
-        <div className="flex w-full min-w-0 items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2 text-sm font-medium text-sidebar-foreground dark:text-white">
-            <MessageSquareIcon className="size-4 shrink-0 text-lime-300/80" />
-            <span className="truncate">{conversation.title}</span>
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary dark:bg-primary/20">
+          <MessageSquareIcon className="size-4" />
+        </span>
+        <div className="min-w-0 flex-1 space-y-1">
+          <div className="flex min-w-0 items-start gap-3">
+            <span className="block min-w-0 flex-1 break-words text-sm font-semibold leading-5 text-sidebar-foreground line-clamp-1 dark:text-white">
+              {conversation.title}
+            </span>
           </div>
-          <span className="text-[10px] uppercase tracking-[0.28em] text-sidebar-foreground/55 dark:text-white/55">
-            {lastActivity}
-          </span>
-        </div>
-        <div className="flex w-full min-w-0 items-center gap-2 text-xs text-sidebar-foreground/70 dark:text-white/55">
-          <p className="line-clamp-2 min-w-0 flex-1 pr-1 leading-5">{conversation.preview}</p>
+          <div className="flex items-start gap-3">
+            <p className="min-w-0 flex-1 text-xs leading-5 text-sidebar-foreground/70 line-clamp-2 dark:text-white/60">
+              {conversation.preview}
+            </p>
+            <time
+              dateTime={conversation.lastActivityAt}
+              title={lastActivityAbsolute}
+              className="shrink-0 pt-0.5 text-[10px] font-medium uppercase tracking-[0.22em] text-sidebar-foreground/55 dark:text-white/60"
+            >
+              {lastActivity}
+            </time>
+          </div>
         </div>
       </SidebarMenuButton>
       {showPin ? (
         <SidebarMenuAction
           showOnHover={false}
-          className="top-2.5 right-2.5 size-8 rounded-lg glass-chip text-sidebar-foreground/60 transition hover:border-primary/35 hover:text-primary"
+          className="right-2.5 size-8 rounded-lg glass-chip text-sidebar-foreground/60 transition hover:border-primary/35 hover:text-primary !top-3.5"
           onClick={(event) => {
             event.stopPropagation();
             onTogglePin(conversation.id);
@@ -315,7 +364,7 @@ function ConversationButton({
       ) : (
         <SidebarMenuAction
           showOnHover
-          className="glass-chip size-7 rounded-lg border border-transparent text-sidebar-foreground/45 opacity-0 transition group-hover/menu-item:opacity-100 hover:border-primary/35 hover:text-primary"
+          className="glass-chip size-7 rounded-lg border border-transparent text-sidebar-foreground/45 opacity-0 transition group-hover/menu-item:opacity-100 hover:border-primary/35 hover:text-primary !top-3.5"
           onClick={(event) => {
             event.stopPropagation();
             onTogglePin(conversation.id);

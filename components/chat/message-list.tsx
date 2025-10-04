@@ -59,16 +59,17 @@ export function MessageList() {
 
   if (!conversation) {
     return (
-      <div className="relative flex flex-1 flex-col items-center justify-center bg-gradient-to-b from-slate-50 via-slate-100 to-white transition-colors dark:from-[#070709] dark:via-[#0a0c10] dark:to-[#0b0d12]">
-        <div className="rounded-3xl border border-border bg-white px-10 py-12 text-center shadow-[0_40px_120px_rgba(0,0,0,0.12)] dark:border-white/10 dark:bg-white/[0.03] dark:text-white">
+      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-80 [background:radial-gradient(circle_at_20%_20%,color-mix(in_srgb,var(--accent)_35%,transparent)_0%,transparent_60%),radial-gradient(circle_at_80%_10%,color-mix(in_srgb,var(--primary)_28%,transparent)_0%,transparent_55%)]" />
+        <div className="glass-panel w-full max-w-xl rounded-[2rem] px-10 py-12 text-center">
           <p className="text-sm uppercase tracking-[0.28em] text-muted-foreground">
-            Welcome back
+            New conversation
           </p>
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground dark:text-white">
-            How can I help you today?
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground">
+            Welcome to Clanker
           </h1>
           <p className="mt-3 max-w-md text-balance text-sm text-muted-foreground">
-            Start a new chat or pick up where you left off. ChatGPT can help you ideate, plan and build at record speed.
+            Ask anything to kick off a fresh chat, or browse the history in the sidebar to revisit past ideas.
           </p>
         </div>
       </div>
@@ -76,10 +77,10 @@ export function MessageList() {
   }
 
   return (
-    <div className="relative flex-1 bg-gradient-to-b from-white via-slate-100 to-slate-100 transition-colors dark:from-[#070709] dark:via-[#0b0d11] dark:to-[#0d1016]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/10 to-transparent dark:from-black/60" />
+    <div className="relative flex-1 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-75 [background:radial-gradient(circle_at_15%_35%,color-mix(in_srgb,var(--primary)_30%,transparent)_0%,transparent_58%),radial-gradient(circle_at_85%_10%,color-mix(in_srgb,var(--accent)_28%,transparent)_0%,transparent_60%),linear-gradient(140deg,color-mix(in_srgb,var(--background)_92%,transparent)_0%,color-mix(in_srgb,var(--background)_75%,transparent)_100%)]" />
       <ScrollArea className="h-full">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 pb-28 pt-24 md:gap-8 md:px-6 md:pb-32 md:pt-28">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 pb-28 pt-28 md:gap-8 md:px-6 md:pb-32 md:pt-32">
           <ConversationIntro />
           {timeline.map((entry, index) => {
             if (entry.type === "separator") {
@@ -118,16 +119,16 @@ function formatDayLabel(date: Date) {
 function DayDivider({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-3 px-4 py-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground md:gap-4 md:px-6">
-      <Separator className="flex-1 bg-border dark:bg-white/5" />
+  <Separator className="flex-1 bg-border" />
       <span>{label}</span>
-      <Separator className="flex-1 bg-border dark:bg-white/5" />
+  <Separator className="flex-1 bg-border" />
     </div>
   );
 }
 
 function ConversationIntro() {
   return (
-    <div className="mx-4 mb-10 space-y-4 rounded-3xl border border-border bg-white/90 p-5 text-foreground shadow-[0_30px_120px_rgba(10,10,14,0.12)] backdrop-blur md:mx-6 md:mb-12 md:p-6 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:shadow-[0_40px_120px_rgba(10,10,14,0.45)]">
+    <div className="glass-panel mx-4 mb-10 space-y-4 rounded-[2rem] p-6 text-foreground md:mx-6 md:mb-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-[0.3em] text-emerald-600/80 dark:text-emerald-300/70">
@@ -141,7 +142,7 @@ function ConversationIntro() {
           Live
         </span>
       </div>
-      <p className="max-w-2xl text-sm leading-6 text-muted-foreground dark:text-white/65">
+      <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
         This conversation syncs across devices. Smart reminders, references and inline search keep everything at your fingertips while ChatGPT drafts, critiques, and iterates alongside you.
       </p>
     </div>

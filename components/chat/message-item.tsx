@@ -47,10 +47,10 @@ export function MessageItem({ message }: MessageItemProps) {
 
       <div
         className={cn(
-          "max-w-3xl flex-1 space-y-3 rounded-2xl border px-4 py-4 text-sm leading-7 shadow-[0_0_30px_rgba(12,12,16,0.12)] transition-colors md:px-5",
+          "max-w-3xl flex-1 space-y-3 rounded-2xl px-4 py-4 text-sm leading-7 transition-all md:px-5",
           isAssistant
-            ? "border-border bg-muted/40 text-foreground dark:border-transparent dark:bg-white/3 dark:text-white/85 dark:backdrop-blur-[2px]"
-            : "ml-auto border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-transparent dark:bg-emerald-400/10 dark:text-emerald-50"
+            ? "glass-panel border border-transparent text-foreground/90 shadow-none"
+            : "ml-auto glass-inline border border-transparent text-primary-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_35%,transparent)_0%,color-mix(in_srgb,var(--primary)_18%,transparent)_100%)]"
         )}
       >
         {isAssistant && message.reasoning?.length ? (
@@ -73,7 +73,7 @@ export function MessageItem({ message }: MessageItemProps) {
         ) : null}
 
         {isAssistant && showReasoning && message.reasoning?.length ? (
-          <div className="rounded-xl border border-border bg-background/80 p-3 text-xs text-muted-foreground shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white/70">
+          <div className="glass-inline rounded-xl border border-transparent p-3 text-xs text-muted-foreground">
             <ul className="space-y-2">
               {message.reasoning.map((step, index) => (
                 <li key={`${message.id}-reason-${index}`} className="flex gap-2">

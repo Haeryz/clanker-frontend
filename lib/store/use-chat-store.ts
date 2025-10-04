@@ -26,11 +26,14 @@ type ChatStore = {
   setStreamingMessage: (messageId: string | null) => void;
 };
 
-const initialConversations = sampleConversations;
+const initialConversations = sampleConversations.map((conversation) => ({
+  ...conversation,
+  messages: [...conversation.messages],
+}));
 
 export const useChatStore = create<ChatStore>((set) => ({
   conversations: initialConversations,
-  selectedConversationId: initialConversations[0]?.id ?? null,
+  selectedConversationId: null,
   searchTerm: "",
   streamingMessageId: null,
   selectConversation: (conversationId) => set({ selectedConversationId: conversationId }),

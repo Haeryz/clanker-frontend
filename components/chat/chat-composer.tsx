@@ -104,12 +104,13 @@ export function ChatComposer() {
 
   return (
     <TooltipProvider delayDuration={120}>
-      <div className="relative border-t border-border bg-white/85 px-4 pb-6 pt-4 backdrop-blur transition-colors md:px-6 dark:border-white/10 dark:bg-[#090b11]/90">
+      <div className="relative border-t border-transparent px-4 pb-6 pt-4 transition-colors md:px-6">
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[320px] [background:radial-gradient(circle_at_30%_-10%,color-mix(in_srgb,var(--primary)_32%,transparent)_0%,transparent_55%),radial-gradient(circle_at_70%_0%,color-mix(in_srgb,var(--accent)_30%,transparent)_0%,transparent_60%)]" />
         <div className="mx-auto w-full max-w-3xl space-y-4">
           <SuggestionRow onSelect={handleSuggestion} />
           <form
             onSubmit={handleSubmit}
-            className="space-y-3 rounded-3xl border border-border bg-white p-4 shadow-[0_-20px_60px_rgba(8,8,12,0.12)] backdrop-blur-sm transition-colors md:p-6 dark:border-white/10 dark:bg-white/5 dark:shadow-[0_-20px_60px_rgba(8,8,12,0.35)]"
+            className="glass-form space-y-3 rounded-[1.75rem] p-4 md:p-6"
           >
             <Textarea
               ref={textareaRef}
@@ -119,9 +120,9 @@ export function ChatComposer() {
               onKeyDown={handleKeyDown}
               placeholder="Ask ChatGPT to help with ideas, code, or writing…"
               rows={1}
-              className="min-h-[56px] resize-none border-none bg-transparent px-1 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-0 dark:text-white dark:placeholder:text-white/40"
+              className="min-h-[56px] resize-none border-none bg-transparent px-1 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-0"
             />
-            <Separator className="bg-border dark:bg-white/5" />
+            <Separator className="bg-border/60" />
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <ComposerIconButton icon={PlusIcon} label="Insert" />
@@ -134,7 +135,7 @@ export function ChatComposer() {
                   type="submit"
                   size="sm"
                   disabled={!canSend}
-                  className="rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-emerald-950 transition hover:bg-emerald-400 disabled:bg-emerald-500/40 disabled:text-emerald-200"
+                  className="rounded-xl bg-primary/80 px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary disabled:bg-primary/40 disabled:text-primary-foreground/70"
                 >
                   <SendIcon className="mr-2 size-4" />
                   Send
@@ -142,7 +143,7 @@ export function ChatComposer() {
               </div>
             </div>
           </form>
-          <p className="text-center text-xs text-muted-foreground dark:text-white/40">
+          <p className="text-center text-xs text-muted-foreground">
             ChatGPT can make mistakes. Consider checking important information.
           </p>
         </div>
@@ -163,12 +164,15 @@ function SuggestionRow({
           key={suggestion}
           type="button"
           onClick={() => onSelect(suggestion)}
-          className="rounded-2xl border border-border bg-background/70 px-3 py-1.5 text-xs font-medium text-foreground/70 transition hover:bg-background/90 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:border-white/20 dark:hover:bg-white/10"
+          className="glass-chip rounded-2xl px-3 py-1.5 text-xs font-medium text-foreground/80 transition hover:border-primary/40 hover:text-primary"
         >
           {suggestion}
         </button>
       ))}
-      <Badge className="hidden rounded-2xl border border-border bg-transparent px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground sm:inline-flex dark:border-white/10 dark:text-white/40">
+      <Badge
+        variant="outline"
+        className="glass-chip hidden rounded-2xl border-transparent px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground sm:inline-flex"
+      >
         Suggestions
       </Badge>
     </div>
@@ -185,11 +189,11 @@ function ComposerIconButton({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <IconButton className="size-10 rounded-xl border border-border bg-background/60 text-foreground/70 hover:bg-background/80 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10">
+        <IconButton className="glass-chip size-10 rounded-xl text-foreground/70 hover:border-primary/40 hover:text-primary">
           <Icon className="size-4" />
         </IconButton>
       </TooltipTrigger>
-      <TooltipContent side="top" className="border border-border bg-background/90 text-foreground/80 dark:border-white/10 dark:bg-[#0d1014] dark:text-white/80">
+      <TooltipContent side="top" className="glass-chip border-transparent px-3 py-1.5 text-foreground/80">
         {label}
       </TooltipContent>
     </Tooltip>

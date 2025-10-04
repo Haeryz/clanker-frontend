@@ -15,7 +15,7 @@ export const IconButton = forwardRef<
         size={size}
         variant={variant}
         className={cn(
-          "h-9 w-9 rounded-xl border border-border bg-background/40 text-foreground/60 transition hover:bg-background/70 dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10",
+          "glass-chip h-9 w-9 rounded-xl text-foreground/70 transition hover:border-primary/40 hover:text-primary",
           className
         )}
         {...props}

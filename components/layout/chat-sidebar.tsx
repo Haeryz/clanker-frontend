@@ -114,23 +114,28 @@ export function ChatSidebar() {
   }, [conversations, searchTerm]);
 
   return (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground/90 transition-colors">
-      <SidebarHeader className="gap-4 px-3 pb-4 pt-5">
+    <div className="flex h-full flex-col bg-transparent text-sidebar-foreground transition-colors">
+      <SidebarHeader className="gap-4 px-5 pb-5 pt-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm font-semibold tracking-tight text-sidebar-foreground">
-            <SparklesIcon className="size-5 text-emerald-400" />
-            <span>ChatGPT</span>
+          <div className="flex items-center gap-2 text-sm font-semibold tracking-tight text-sidebar-foreground/90">
+            <span className="inline-flex size-8 items-center justify-center rounded-2xl bg-primary/20 text-primary">
+              <SparklesIcon className="size-4" />
+            </span>
+            <span className="tracking-[0.16em] text-xs uppercase text-sidebar-foreground/70">
+              Clanker
+            </span>
           </div>
           <Badge
             variant="outline"
-            className="border-sidebar-border bg-sidebar/80 text-[10px] font-normal uppercase tracking-widest text-sidebar-foreground/60"
+            className="glass-chip border-transparent px-3 py-1 text-[10px] font-normal uppercase tracking-widest text-sidebar-foreground/65"
           >
             Beta
           </Badge>
         </div>
         <Button
           size="lg"
-          className="h-11 w-full justify-start gap-2 rounded-xl border border-sidebar-border bg-sidebar-primary/10 text-left text-sidebar-foreground transition hover:bg-sidebar-primary/20"
+          variant="ghost"
+          className="glass-subtle h-11 w-full justify-start gap-2 rounded-2xl text-left text-sidebar-foreground/85 transition hover:border-primary/40 hover:text-primary hover:shadow-lg"
           onClick={startNewConversation}
         >
           <PlusIcon className="size-4" />
@@ -138,23 +143,23 @@ export function ChatSidebar() {
         </Button>
       </SidebarHeader>
       <SidebarContent className="flex-1 overflow-hidden">
-        <div className="px-3 pb-3">
+        <div className="px-5 pb-4">
           <div className="relative">
             <SearchIcon className="absolute left-3 top-2.5 size-4 text-sidebar-foreground/50" />
             <SidebarInput
               value={searchTerm}
               onChange={(event) => updateSearchTerm(event.target.value)}
               placeholder="Search conversations"
-              className="h-10 rounded-xl border-sidebar-border bg-sidebar/80 pl-9 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/50"
+              className="glass-inline h-10 rounded-2xl border-0 bg-transparent pl-9 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:border-primary/40"
             />
           </div>
         </div>
 
         <ScrollArea className="flex-1">
-          <div className="space-y-4 px-1 pb-6">
+          <div className="space-y-4 px-3 pb-6">
             {pinned.length > 0 ? (
               <SidebarGroup className="px-1">
-                <SidebarGroupLabel className="px-3 text-xs uppercase tracking-wide text-sidebar-foreground/50">
+                <SidebarGroupLabel className="px-4 text-[11px] uppercase tracking-[0.2em] text-sidebar-foreground/50">
                   Pinned
                 </SidebarGroupLabel>
                 <SidebarGroupContent>
@@ -175,25 +180,25 @@ export function ChatSidebar() {
             ) : null}
 
             {pinned.length > 0 && sections.length > 0 ? (
-              <SidebarSeparator className="bg-sidebar-border/70" />
+              <SidebarSeparator className="bg-white/20 dark:bg-white/10" />
             ) : null}
 
             <SidebarGroup className="flex-1 px-1">
-              <SidebarGroupLabel className="px-3 text-xs uppercase tracking-wide text-sidebar-foreground/50">
+              <SidebarGroupLabel className="px-4 text-[11px] uppercase tracking-[0.2em] text-sidebar-foreground/45">
                 Recents
               </SidebarGroupLabel>
               <SidebarGroupContent className="pb-4">
                 <SidebarMenu className="gap-2">
                   {sections.length === 0 && pinned.length === 0 ? (
                     <SidebarMenuItem>
-                      <div className="text-xs text-sidebar-foreground/55">
+                      <div className="glass-inline rounded-xl px-3 py-2 text-xs text-sidebar-foreground/65">
                         No conversations yet. Start a new chat to see it here.
                       </div>
                     </SidebarMenuItem>
                   ) : (
                     sections.map((section) => (
                       <div key={section.label} className="space-y-2">
-                        <p className="px-3 text-[11px] font-medium uppercase tracking-[0.12em] text-sidebar-foreground/45">
+                        <p className="px-4 text-[10px] font-medium uppercase tracking-[0.26em] text-sidebar-foreground/40">
                           {section.label}
                         </p>
                         {section.conversations.map((conversation) => (
@@ -215,34 +220,34 @@ export function ChatSidebar() {
         </ScrollArea>
       </SidebarContent>
 
-      <SidebarFooter className="px-3 pb-5 pt-4">
-        <SidebarMenu className="gap-1 text-sm">
+      <SidebarFooter className="px-5 pb-6 pt-4">
+        <SidebarMenu className="gap-1.5 text-sm">
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-sidebar-primary/10 text-sidebar-foreground/80 transition hover:bg-sidebar-primary/20">
+            <SidebarMenuButton className="glass-inline rounded-xl text-sidebar-foreground/80 transition hover:border-primary/40 hover:text-primary">
               <CompassIcon className="size-4" />
               <span>Explore GPTs</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:bg-sidebar/70">
+            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
               <Wand2Icon className="size-4" />
               <span>Create custom GPT</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:bg-sidebar/70">
+            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
               <HistoryIcon className="size-4" />
               <span>Updates &amp; FAQ</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:bg-sidebar/70">
+            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
               <KeyboardIcon className="size-4" />
               <span>Keyboard shortcuts</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:bg-sidebar/70">
+            <SidebarMenuButton className="rounded-xl bg-transparent text-sidebar-foreground/70 transition hover:text-primary">
               <SettingsIcon className="size-4" />
               <span>Settings</span>
             </SidebarMenuButton>
@@ -277,9 +282,9 @@ function ConversationButton({
     <SidebarMenuItem>
       <SidebarMenuButton
         className={cn(
-          "group flex w-full flex-col items-start gap-1 rounded-xl border border-transparent bg-sidebar/60 px-3 py-2.5 text-left text-sidebar-foreground/80 transition group-has-data-[sidebar=menu-action]/menu-item:pr-12",
-          "hover:border-sidebar-border hover:bg-sidebar/80",
-          isActive && "border-sidebar-border bg-sidebar-primary/15 text-sidebar-foreground dark:border-white/15 dark:bg-white/10 dark:text-white"
+          "group glass-inline flex w-full flex-col items-start gap-1 rounded-2xl px-3 py-2.5 text-left text-sidebar-foreground/80 transition group-has-data-[sidebar=menu-action]/menu-item:pr-12",
+          "hover:border-primary/35 hover:text-primary",
+          isActive && "border-primary/45 text-primary"
         )}
         onClick={() => onSelect(conversation.id)}
       >
@@ -288,7 +293,7 @@ function ConversationButton({
             <MessageSquareIcon className="size-4 shrink-0 text-lime-300/80" />
             <span className="truncate">{conversation.title}</span>
           </div>
-          <span className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60 dark:text-white/55">
+          <span className="text-[10px] uppercase tracking-[0.28em] text-sidebar-foreground/55 dark:text-white/55">
             {lastActivity}
           </span>
         </div>
@@ -299,7 +304,7 @@ function ConversationButton({
       {showPin ? (
         <SidebarMenuAction
           showOnHover={false}
-          className="top-2.5 right-2.5 size-8 rounded-lg border border-sidebar-border bg-sidebar/70 text-sidebar-foreground/60 transition hover:bg-sidebar/90 dark:border-white/10 dark:bg-white/5 dark:text-white/55 dark:hover:border-white/20 dark:hover:bg-white/10"
+          className="top-2.5 right-2.5 size-8 rounded-lg glass-chip text-sidebar-foreground/60 transition hover:border-primary/35 hover:text-primary"
           onClick={(event) => {
             event.stopPropagation();
             onTogglePin(conversation.id);
@@ -310,7 +315,7 @@ function ConversationButton({
       ) : (
         <SidebarMenuAction
           showOnHover
-          className="size-7 rounded-lg border border-sidebar-border bg-transparent text-sidebar-foreground/40 opacity-0 transition group-hover/menu-item:opacity-100 dark:border-white/10 dark:text-white/40"
+          className="glass-chip size-7 rounded-lg border border-transparent text-sidebar-foreground/45 opacity-0 transition group-hover/menu-item:opacity-100 hover:border-primary/35 hover:text-primary"
           onClick={(event) => {
             event.stopPropagation();
             onTogglePin(conversation.id);

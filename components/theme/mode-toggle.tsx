@@ -27,7 +27,7 @@ export function ModeToggle() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative h-10 w-10 rounded-xl border border-border/60 bg-background/40 text-foreground/70 transition hover:bg-background/70"
+          className="relative glass-chip h-10 w-10 rounded-xl text-foreground/70"
         >
           <SunIcon className="h-[1.1rem] w-[1.1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute h-[1.1rem] w-[1.1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -37,7 +37,7 @@ export function ModeToggle() {
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="w-44 rounded-xl border border-border/60 bg-popover/90 p-1 backdrop-blur"
+        className="glass-inline w-44 rounded-xl border-transparent p-1"
       >
         {options.map(({ label, value, icon: Icon }) => (
           <DropdownMenuItem

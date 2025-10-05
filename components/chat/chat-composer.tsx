@@ -117,12 +117,6 @@ export function ChatComposer({ floating = false }: ChatComposerProps) {
       >
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-0 top-0 -z-10 h-[320px] [background:radial-gradient(circle_at_30%_-10%,color-mix(in_srgb,var(--primary)_32%,transparent)_0%,transparent_55%),radial-gradient(circle_at_70%_0%,color-mix(in_srgb,var(--accent)_30%,transparent)_0%,transparent_60%)]",
-            floating && "h-full opacity-70"
-          )}
-        />
-        <div
-          className={cn(
             "mx-auto w-full max-w-3xl space-y-4 transition-all duration-500",
             floating && "max-w-2xl"
           )}
